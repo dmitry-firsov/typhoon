@@ -12,8 +12,8 @@
 #import "TyphoonPlatform.h"
 
 #import "TyphoonViewControllerInjector.h"
-#import "UIViewController+TyphoonStoryboardIntegration.h"
-#import "UIView+TyphoonDefinitionKey.h"
+#import "TyphoonViewController+TyphoonStoryboardIntegration.h"
+#import "TyphoonView+TyphoonDefinitionKey.h"
 
 #import "TyphoonComponentFactory+TyphoonDefinitionRegisterer.h"
 

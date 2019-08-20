@@ -9,7 +9,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#import "UIView+TyphoonDefinitionKey.h"
+#import "TyphoonView+TyphoonDefinitionKey.h"
 
 #import <objc/runtime.h>
 

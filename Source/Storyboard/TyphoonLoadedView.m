@@ -12,7 +12,7 @@
 
 #import "TyphoonLoadedView.h"
 #import "TyphoonViewHelpers.h"
-#import "UIView+TyphoonOutletTransfer.h"
+#import "TyphoonView+TyphoonOutletTransfer.h"
 #import <objc/runtime.h>
 
 @implementation TyphoonLoadedView

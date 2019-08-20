@@ -9,8 +9,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#import "UIView+TyphoonOutletTransfer.h"
-#import "UIResponder+TyphoonOutletTransfer.h"
+#import "TyphoonView+TyphoonOutletTransfer.h"
+#import "TyphoonResponder+TyphoonOutletTransfer.h"
 #import <objc/runtime.h>
 
 @implementation TyphoonViewClass (TyphoonOutletTransfer)

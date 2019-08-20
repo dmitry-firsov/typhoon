@@ -9,7 +9,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#import "UIViewController+TyphoonStoryboardIntegration.h"
+#import "TyphoonViewController+TyphoonStoryboardIntegration.h"
 
 #import <objc/runtime.h>
 

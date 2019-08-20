@@ -9,7 +9,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#import "UIResponder+TyphoonOutletTransfer.h"
+#import "TyphoonResponder+TyphoonOutletTransfer.h"
 #import "NSLayoutConstraint+TyphoonOutletTransfer.h"
 #import "TyphoonIntrospectionUtils.h"
 #import "TyphoonTypeDescriptor.h"

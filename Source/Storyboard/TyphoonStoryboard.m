@@ -16,7 +16,7 @@
 #import "TyphoonComponentFactory+Storyboard.h"
 #import "TyphoonViewControllerFactory.h"
 #import "OCLogTemplate.h"
-#import "UIViewController+TyphoonStoryboardIntegration.h"
+#import "TyphoonViewController+TyphoonStoryboardIntegration.h"
 
 
 @implementation TyphoonStoryboard

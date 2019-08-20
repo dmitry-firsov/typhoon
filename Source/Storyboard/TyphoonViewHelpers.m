@@ -27,7 +27,7 @@
     }
     id result = [currentFactory componentForKey:definitionKey];
     if (![result isKindOfClass:[TyphoonViewClass class]]) {
-        [NSException raise:NSInternalInconsistencyException format:@"Error: definition for key '%@' is not kind of UIView but %@", definitionKey, result];
+        [NSException raise:NSInternalInconsistencyException format:@"Error: definition for key '%@' is not kind of %@ but %@", definitionKey, NSStringFromClass([TyphoonViewClass class]), result];
     }
     [self transferPropertiesFromView:original toView:result];
     return result;
