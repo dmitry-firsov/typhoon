@@ -255,6 +255,7 @@
 		067BA6881D42D8320097F2B5 /* TyphoonAssemblySelectorAdviser.h in Headers */ = {isa = PBXBuildFile; fileRef = BA79874870787742D2D095E5 /* TyphoonAssemblySelectorAdviser.h */; };
 		067BA68A1D42D8320097F2B5 /* development_Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = BA798DE311DBEFCDDB3D09AA /* development_Config.plist */; };
 		067BA6901D42D8D40097F2B5 /* Typhoon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 067BA68E1D42D8320097F2B5 /* Typhoon.framework */; };
+		0A04DCD1230C33BF0073803A /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A04DCD0230C33BF0073803A /* AppKit.framework */; };
 		0AA33892230AEF3800277627 /* TyphoonPlatform.h in Headers */ = {isa = PBXBuildFile; fileRef = 0AA33891230AEEB400277627 /* TyphoonPlatform.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0AA33893230AEF3900277627 /* TyphoonPlatform.h in Headers */ = {isa = PBXBuildFile; fileRef = 0AA33891230AEEB400277627 /* TyphoonPlatform.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0AA33894230AEF3A00277627 /* TyphoonPlatform.h in Headers */ = {isa = PBXBuildFile; fileRef = 0AA33891230AEEB400277627 /* TyphoonPlatform.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -512,7 +513,6 @@
 		6B07727419370A8F0083714E /* SomeProperties.properties in Resources */ = {isa = PBXBuildFile; fileRef = 6B0770761936F63A0083714E /* SomeProperties.properties */; };
 		6B07727719370A920083714E /* SomeResource in Resources */ = {isa = PBXBuildFile; fileRef = 6B0770771936F63A0083714E /* SomeResource */; };
 		6B07727819370A920083714E /* SomeResource in Resources */ = {isa = PBXBuildFile; fileRef = 6B0770771936F63A0083714E /* SomeResource */; };
-		6B07734719377EAA0083714E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B077171193704F40083714E /* Cocoa.framework */; };
 		6B07736119377EAA0083714E /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B076E7F1936F5850083714E /* XCTest.framework */; };
 		6B07736219377EAA0083714E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B077171193704F40083714E /* Cocoa.framework */; };
 		6B077389193780630083714E /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B077377193780580083714E /* MainMenu.xib */; };
@@ -1397,6 +1397,7 @@
 		01A28E051C5EBCD7006F0A95 /* TyphoonMemoryManagementUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TyphoonMemoryManagementUtils.h; sourceTree = "<group>"; };
 		01A28E061C5EBCD7006F0A95 /* TyphoonMemoryManagementUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TyphoonMemoryManagementUtils.m; sourceTree = "<group>"; };
 		067BA68E1D42D8320097F2B5 /* Typhoon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Typhoon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0A04DCD0230C33BF0073803A /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/AppKit.framework; sourceTree = DEVELOPER_DIR; };
 		0AA33891230AEEB400277627 /* TyphoonPlatform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TyphoonPlatform.h; sourceTree = "<group>"; };
 		269BC6BA1BAFEC19005A1DA3 /* Warnings.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Warnings.xcconfig; sourceTree = "<group>"; };
 		2DBA102EFAD54C22C82B4834 /* TyphoonOptionMatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TyphoonOptionMatcher.m; sourceTree = "<group>"; };
@@ -1982,7 +1983,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6B07734719377EAA0083714E /* Cocoa.framework in Frameworks */,
+				0A04DCD1230C33BF0073803A /* AppKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2141,6 +2142,7 @@
 		6B076E5C1936F5850083714E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0A04DCD0230C33BF0073803A /* AppKit.framework */,
 				6B076E5D1936F5850083714E /* Foundation.framework */,
 				6B076E5F1936F5850083714E /* CoreGraphics.framework */,
 				6B076E611936F5850083714E /* UIKit.framework */,
@@ -5523,7 +5525,10 @@
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				INFOPLIST_FILE = "Tests/osx/Typhoon-osx/Typhoon-osx-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
@@ -5548,7 +5553,10 @@
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				INFOPLIST_FILE = "Tests/osx/Typhoon-osx/Typhoon-osx-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
