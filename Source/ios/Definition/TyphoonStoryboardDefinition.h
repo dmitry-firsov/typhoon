@@ -10,10 +10,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #import <Typhoon/Typhoon.h>
+#import "TyphoonPlatform.h"
 
 @interface TyphoonStoryboardDefinition : TyphoonFactoryDefinition
 
 - (id)initWithStoryboardName:(id)storyboardName viewControllerId:(id)viewControllerId;
-- (id)initWithStoryboard:(UIStoryboard *)storyboard viewControllerId:(id)viewControllerId;
+- (id)initWithStoryboard:(TyphoonStoryboardClass *)storyboard viewControllerId:(id)viewControllerId;
 
 @end

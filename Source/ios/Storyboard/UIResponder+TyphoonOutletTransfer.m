@@ -14,9 +14,9 @@
 #import "TyphoonIntrospectionUtils.h"
 #import "TyphoonTypeDescriptor.h"
 
-@implementation UIResponder (TyphoonOutletTransfer)
+@implementation TyphoonResponderClass (TyphoonOutletTransfer)
 
-- (void)transferConstraintsFromView:(UIView *)view
+- (void)transferConstraintsFromView:(TyphoonViewClass *)view
 {
     Class currentClass = [self class];
     NSSet *properties = [TyphoonIntrospectionUtils propertiesForClass:currentClass
@@ -42,7 +42,7 @@
 }
 
 - (void)transferConstraintOutletForKey:(NSString *)propertyName
-                              fromView:(UIView *)view
+                              fromView:(TyphoonViewClass *)view
 {
     NSLayoutConstraint *constraint = [self valueForKey:propertyName];
     if (constraint.typhoonTransferIdentifier) {
@@ -58,7 +58,7 @@
 }
 
 - (void)transferConstraintOutletsForKey:(NSString *)propertyName
-                               fromView:(UIView *)view
+                               fromView:(TyphoonViewClass *)view
 {
     NSArray *constraints = [self valueForKey:propertyName];
     if ([self isOutletCollection:constraints]) {
@@ -83,7 +83,7 @@
 }
 
 - (NSLayoutConstraint *)transferConstraint:(NSLayoutConstraint *)transferConstraint
-                                  fromView:(UIView *)view
+                                  fromView:(TyphoonViewClass *)view
 {
     if (!transferConstraint.typhoonTransferIdentifier) {
         return nil;

@@ -16,7 +16,7 @@
 
 @implementation TyphoonViewHelpers
 
-+ (id)viewFromDefinition:(NSString *)definitionKey originalView:(UIView *)original
++ (id)viewFromDefinition:(NSString *)definitionKey originalView:(TyphoonViewClass *)original
 {
     if ([[original subviews] count] > 0) {
         LogInfo(@"Warning: placeholder view contains (%d) subviews. They will be replaced by typhoon definition '%@'", (int)[[original subviews] count], definitionKey);
@@ -26,14 +26,14 @@
         [NSException raise:NSInternalInconsistencyException format:@"Can't find Typhoon factory to resolve definition from xib. Check [TyphoonComponentFactory setFactoryForResolvingUI:] method."];
     }
     id result = [currentFactory componentForKey:definitionKey];
-    if (![result isKindOfClass:[UIView class]]) {
+    if (![result isKindOfClass:[TyphoonViewClass class]]) {
         [NSException raise:NSInternalInconsistencyException format:@"Error: definition for key '%@' is not kind of UIView but %@", definitionKey, result];
     }
     [self transferPropertiesFromView:original toView:result];
     return result;
 }
 
-+ (void)transferPropertiesFromView:(UIView *)src toView:(UIView *)dst
++ (void)transferPropertiesFromView:(TyphoonViewClass *)src toView:(TyphoonViewClass *)dst
 {
     //Transferring autolayout
     dst.translatesAutoresizingMaskIntoConstraints = src.translatesAutoresizingMaskIntoConstraints;

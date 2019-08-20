@@ -30,3 +30,4 @@
 #import "TyphoonInjectionByRuntimeArgument.h"
 #import "TyphoonInjectionByType.h"
 #import "TyphoonInjections.h"
+#import "TyphoonPlatform.h"

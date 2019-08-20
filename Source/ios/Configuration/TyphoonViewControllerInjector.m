@@ -9,7 +9,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#import <UIKit/UIKit.h>
+#import "TyphoonPlatform.h"
 
 #import "TyphoonViewControllerInjector.h"
 #import "UIViewController+TyphoonStoryboardIntegration.h"
@@ -27,15 +27,15 @@
 
 + (void)load
 {
-    [UIViewController swizzleViewDidLoadMethod];
+    [TyphoonViewControllerClass swizzleViewDidLoadMethod];
 }
 
-- (void)injectPropertiesForViewController:(UIViewController *)viewController withFactory:(id)factory
+- (void)injectPropertiesForViewController:(TyphoonViewControllerClass *)viewController withFactory:(id)factory
 {
     [self injectPropertiesForViewController:viewController withFactory:factory storyboard:nil];
 }
 
-- (void)injectPropertiesForViewController:(UIViewController *)viewController withFactory:(id<TyphoonComponentFactory>)factory storyboard:(UIStoryboard *)storyboard
+- (void)injectPropertiesForViewController:(TyphoonViewControllerClass *)viewController withFactory:(id<TyphoonComponentFactory>)factory storyboard:(TyphoonStoryboardClass *)storyboard
 {
     if (storyboard && viewController.storyboard && ![viewController.storyboard isEqual:storyboard]) {
         return;
@@ -47,24 +47,45 @@
         [factory inject:viewController];
     }
 
-    NSArray<__kindof UIViewController *> *childViewControllers = [viewController isKindOfClass:UITabBarController.class]
-    ? ((UITabBarController *)viewController).viewControllers
-    : viewController.childViewControllers;
-
-    for (UIViewController *controller in childViewControllers) {
-        if (storyboard && controller.storyboard && ![controller.storyboard isEqual:storyboard]) {
-            continue;
+    if ([viewController isKindOfClass:[TyphoonViewControllerClass class]]) {
+        NSArray<__kindof TyphoonViewControllerClass *> *childViewControllers;
+        
+#if TARGET_OS_IPHONE || TARGET_OS_TV
+        if ([viewController isKindOfClass:[UITabBarController class]]) {
+            childViewControllers = ((UITabBarController *)viewController).viewControllers;
+        } else {
+            childViewControllers = viewController.childViewControllers;
         }
-        [self injectPropertiesForViewController:controller withFactory:factory storyboard:storyboard];
+#elif TARGET_OS_MAC
+        childViewControllers = viewController.childViewControllers;
+#endif
+        
+        for (TyphoonViewControllerClass *childViewController in childViewControllers) {
+            if (storyboard && childViewController.storyboard && ![childViewController.storyboard isEqual:storyboard]) {
+                continue;
+            }
+            [self injectPropertiesForViewController:childViewController withFactory:factory storyboard:storyboard];
+        }
+        
+        if ([viewController isViewLoaded]) {
+            [self injectPropertiesInView:viewController.view withFactory:factory];
+        } else {
+            __weak __typeof (viewController) weakViewController = viewController;
+            [viewController setViewDidLoadNotificationBlock:^{
+                [self injectPropertiesInView:weakViewController.view withFactory:factory];
+            }];
+        }
     }
     
-    __weak __typeof (viewController) weakViewController = viewController;
-    [viewController setViewDidLoadNotificationBlock:^{
-        [self injectPropertiesInView:weakViewController.view withFactory:factory];
-    }];
+#if (!(TARGET_OS_IPHONE || TARGET_OS_TV))
+    if ([viewController isKindOfClass:[NSWindowController class]]) {
+        TyphoonViewControllerClass *typhoonViewController = [(NSWindowController *)viewController contentViewController];
+        [self injectPropertiesForViewController:typhoonViewController withFactory:factory storyboard:storyboard];
+    }
+#endif
 }
 
-- (void)injectPropertiesInView:(UIView *)view withFactory:(id)factory
+- (void)injectPropertiesInView:(TyphoonViewClass *)view withFactory:(id)factory
 {
     if (view.typhoonKey.length > 0) {
         [factory inject:view withSelector:NSSelectorFromString(view.typhoonKey)];
@@ -74,7 +95,7 @@
         return;
     }
     
-    for (UIView *subview in view.subviews) {
+    for (TyphoonViewClass *subview in view.subviews) {
         [self injectPropertiesInView:subview withFactory:factory];
     }
 }

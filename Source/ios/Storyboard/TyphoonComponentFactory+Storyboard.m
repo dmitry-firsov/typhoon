@@ -16,7 +16,7 @@
 #import "TyphoonDefinition+Infrastructure.h"
 #import "TyphoonStoryboard.h"
 #import "TyphoonWeakComponentsPool.h"
-
+#import "TyphoonPlatform.h"
 
 @interface TyphoonComponentFactory (Private)
 
@@ -51,7 +51,7 @@ static const char *kStoryboardPool;
     return pool;
 }
 
-- (id)scopeCachedViewControllerForInstance:(UIViewController *)instance typhoonKey:(NSString *)typhoonKey
+- (id)scopeCachedViewControllerForInstance:(TyphoonViewControllerClass *)instance typhoonKey:(NSString *)typhoonKey
 {
     @synchronized (self) {
         [self loadIfNeeded];
@@ -89,7 +89,7 @@ static const char *kStoryboardPool;
     return definition;
 }
 
-- (TyphoonDefinition *)definitionForInstance:(UIViewController *)instance typhoonKey:(NSString *)typhoonKey
+- (TyphoonDefinition *)definitionForInstance:(TyphoonViewControllerClass *)instance typhoonKey:(NSString *)typhoonKey
 {
     TyphoonDefinition *definition;
     if (typhoonKey.length) {

@@ -10,10 +10,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #import <Foundation/Foundation.h>
+#import "TyphoonPlatform.h"
 
 @interface TyphoonViewHelpers : NSObject
 
-+ (id)viewFromDefinition:(NSString *)definitionKey originalView:(UIView *)original;
-+ (void)transferPropertiesFromView:(UIView *)src toView:(UIView *)dst;
++ (id)viewFromDefinition:(NSString *)definitionKey originalView:(TyphoonViewClass *)original;
++ (void)transferPropertiesFromView:(TyphoonViewClass *)src toView:(TyphoonViewClass *)dst;
 
 @end

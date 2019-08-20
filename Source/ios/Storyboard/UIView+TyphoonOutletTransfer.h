@@ -9,9 +9,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#import <UIKit/UIKit.h>
+#import "TyphoonPlatform.h"
 
-@interface UIView (TyphoonOutletTransfer)
+@interface TyphoonViewClass (TyphoonOutletTransfer)
 
 // Flag to check whether the outlets constraint transportation needs
 @property (nonatomic, assign) BOOL typhoonNeedTransferOutlets;

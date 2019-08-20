@@ -9,10 +9,10 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#import <UIKit/UIKit.h>
+#import "TyphoonPlatform.h"
 
-@interface UIResponder (TyphoonOutletTransfer)
+@interface TyphoonResponderClass (TyphoonOutletTransfer)
 
-- (void)transferConstraintsFromView:(UIView *)view;
+- (void)transferConstraintsFromView:(TyphoonViewClass *)view;
 
 @end

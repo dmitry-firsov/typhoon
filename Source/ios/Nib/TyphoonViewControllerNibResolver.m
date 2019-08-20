@@ -8,7 +8,6 @@
 //  in accordance with the terms of the license agreement accompanying it.
 //
 ////////////////////////////////////////////////////////////////////////////////
-#import <UIKit/UIKit.h>
 
 #import "TyphoonViewControllerNibResolver.h"
 #import "TyphoonDefinition.h"
@@ -47,7 +46,7 @@
 
 - (BOOL)shouldProcessDefinition:(TyphoonDefinition *)definition
 {
-    return [definition.type isSubclassOfClass:[UIViewController class]] && definition.initializerGenerated;
+    return [definition.type isSubclassOfClass:[TyphoonViewControllerClass class]] && definition.initializerGenerated;
 }
 
 @end

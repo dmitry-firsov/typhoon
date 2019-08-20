@@ -20,6 +20,7 @@ FOUNDATION_EXPORT double TyphoonVersionNumber;
 //! Project version string for Typhoon.
 FOUNDATION_EXPORT const unsigned char TyphoonVersionString[];
 
+#import "TyphoonPlatform.h"
 #import "TyphoonAssembly.h"
 #import "TyphoonDefinition.h"
 #import "TyphoonBlockDefinition.h"
@@ -41,6 +42,9 @@ FOUNDATION_EXPORT const unsigned char TyphoonVersionString[];
 #import "TyphoonPatcher.h"
 #import "TyphoonAutoInjection.h"
 #import "TyphoonDefinitionNamespace.h"
+#import "TyphoonStoryboard.h"
+#import "TyphoonNibLoader.h"
+#import "TyphoonLoadedView.h"
 #import "NSObject+FactoryHooks.h"
 
 #if TARGET_OS_IPHONE || TARGET_OS_TV

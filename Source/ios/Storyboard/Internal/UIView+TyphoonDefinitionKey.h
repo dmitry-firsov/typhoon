@@ -9,9 +9,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#import <UIKit/UIKit.h>
+#import "TyphoonPlatform.h"
 
-@interface UIView (TyphoonDefinitionKey)
+@interface TyphoonViewClass (TyphoonDefinitionKey)
 
 @property(nonatomic, strong) NSString *typhoonKey;
 

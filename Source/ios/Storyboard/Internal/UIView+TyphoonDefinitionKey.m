@@ -13,7 +13,7 @@
 
 #import <objc/runtime.h>
 
-@implementation UIView (TyphoonDefinitionKey)
+@implementation TyphoonViewClass (TyphoonDefinitionKey)
 
 static const char *kTyphoonKey;
 

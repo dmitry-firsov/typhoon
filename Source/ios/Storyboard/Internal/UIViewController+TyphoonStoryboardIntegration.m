@@ -13,7 +13,7 @@
 
 #import <objc/runtime.h>
 
-@implementation UIViewController (TyphoonStoryboardIntegration)
+@implementation TyphoonViewControllerClass (TyphoonStoryboardIntegration)
 
 static const char *kTyphoonKey;
 static const char *kTyphoonViewDidLoadBlock;
@@ -36,7 +36,7 @@ static const char *kTyphoonViewDidLoadBlock;
 + (void)swizzleViewDidLoadMethod
 {
     SEL sel = @selector(viewDidLoad);
-    Method method = class_getInstanceMethod([UIViewController class], sel);
+    Method method = class_getInstanceMethod([TyphoonViewControllerClass class], sel);
     
     void(*originalImp)(id, SEL) = (void (*)(id, SEL)) method_getImplementation(method);
     

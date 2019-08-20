@@ -10,17 +10,20 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #import <Foundation/Foundation.h>
+#import "TyphoonPlatform.h"
 
 @class TyphoonStoryboardDefinitionContext;
 @protocol TyphoonComponentFactory;
 @class TyphoonStoryboard;
 @class TyphoonInjectionContext;
 
+NS_CLASS_AVAILABLE(10_10, 5_0)
 @interface TyphoonViewControllerFactory : NSObject
 
-+ (UIViewController *)viewControllerWithStoryboardContext:(TyphoonStoryboardDefinitionContext *)context injectionContext:(TyphoonInjectionContext *)injectionContext factory:(id<TyphoonComponentFactory>)factory;
-+ (UIViewController *)viewControllerWithIdentifier:(NSString *)identifier storyboard:(TyphoonStoryboard *)storyboard;
-+ (UIViewController *)cachedViewControllerWithIdentifier:(NSString *)identifier storyboardName:(NSString *)storyboardName factory:(id<TyphoonComponentFactory>)factory;
++ (TyphoonViewControllerClass *)viewControllerWithStoryboardContext:(TyphoonStoryboardDefinitionContext *)context injectionContext:(TyphoonInjectionContext *)injectionContext factory:(id<TyphoonComponentFactory>)factory;
++ (TyphoonViewControllerClass *)viewControllerWithIdentifier:(NSString *)identifier storyboard:(TyphoonStoryboard *)storyboard;
++ (TyphoonViewControllerClass *)cachedViewControllerWithIdentifier:(NSString *)identifier storyboardName:(NSString *)storyboardName factory:(id<TyphoonComponentFactory>)factory;
+
 
 
 @end

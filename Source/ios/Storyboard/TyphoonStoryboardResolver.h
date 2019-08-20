@@ -12,6 +12,6 @@
 
 #import <Foundation/Foundation.h>
 
-
+NS_CLASS_AVAILABLE(10_10, 5_0)
 @interface TyphoonStoryboardResolver : NSObject
 @end

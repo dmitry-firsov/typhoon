@@ -35,7 +35,7 @@
     }
     
     TyphoonInjectionContext *injectionContext = [[TyphoonInjectionContext alloc] initWithFactory:factory args:args raiseExceptionIfCircular:YES];
-    UIViewController *result = [TyphoonViewControllerFactory viewControllerWithStoryboardContext:self.context injectionContext:injectionContext factory:factory];
+    TyphoonViewControllerClass *result = [TyphoonViewControllerFactory viewControllerWithStoryboardContext:self.context injectionContext:injectionContext factory:factory];
     return result;
 }
 
@@ -54,7 +54,7 @@
     return self;
 }
 
-- (id)initWithStoryboard:(UIStoryboard *)storyboard viewControllerId:(id)viewControllerId
+- (id)initWithStoryboard:(TyphoonStoryboardClass *)storyboard viewControllerId:(id)viewControllerId
 {
     self = [super initWithFactory:storyboard
                          selector:@selector(instantiateViewControllerWithIdentifier:)

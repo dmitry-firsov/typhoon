@@ -36,20 +36,30 @@
         return storyboard;
 }
 
-- (UIViewController *)instantiatePrototypeViewControllerWithIdentifier:(NSString *)identifier {
+- (TyphoonViewControllerClass *)instantiatePrototypeViewControllerWithIdentifier:(NSString *)identifier
+{
+#if TARGET_OS_IPHONE || TARGET_OS_TV
     return [super instantiateViewControllerWithIdentifier:identifier];
+#elif TARGET_OS_MAC
+    return [super instantiateControllerWithIdentifier:identifier];
+#endif
 }
 
-- (id)instantiateViewControllerWithIdentifier:(NSString *)identifier
-{
+#if TARGET_OS_MAC
+- (id)instantiateControllerWithIdentifier:(NSString *)identifier {
+    return [self instantiateViewControllerWithIdentifier:identifier];
+}
+#endif
+
+- (id)instantiateViewControllerWithIdentifier:(NSString *)identifier {
     NSAssert(self.factory, @"TyphoonStoryboard's factory property can't be nil!");
     
-    UIViewController *cachedInstance = [TyphoonViewControllerFactory cachedViewControllerWithIdentifier:identifier storyboardName:self.storyboardName factory:self.factory];
+    TyphoonViewControllerClass *cachedInstance = [TyphoonViewControllerFactory cachedViewControllerWithIdentifier:identifier storyboardName:self.storyboardName factory:self.factory];
     if (cachedInstance) {
         return cachedInstance;
     }
     
-    UIViewController *result = [TyphoonViewControllerFactory viewControllerWithIdentifier:identifier storyboard:self];
+    TyphoonViewControllerClass *result = [TyphoonViewControllerFactory viewControllerWithIdentifier:identifier storyboard:self];
 
     return result;
 }

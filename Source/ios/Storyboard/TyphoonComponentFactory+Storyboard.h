@@ -10,12 +10,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #import <Typhoon/Typhoon.h>
+#import "TyphoonPlatform.h"
 
 @interface TyphoonComponentFactory (Storyboard)
 
 @property (strong, nonatomic, readonly) id<TyphoonComponentsPool> storyboardPool;
 
-- (id)scopeCachedViewControllerForInstance:(UIViewController *)instance typhoonKey:(NSString *)typhoonKey;
+- (id)scopeCachedViewControllerForInstance:(TyphoonViewControllerClass *)instance typhoonKey:(NSString *)typhoonKey;
 - (id)scopeCachedViewControllerForClass:(Class)viewControllerClass typhoonKey:(NSString *)typhoonKey;
 
 @end

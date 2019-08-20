@@ -11,6 +11,7 @@
 
 #import <Foundation/Foundation.h>
 
+NS_CLASS_AVAILABLE(10_10, 5_0)
 @interface TyphoonStoryboardProvider : NSObject
 
 - (NSArray *)collectStoryboardsFromBundle:(NSBundle *)bundle;

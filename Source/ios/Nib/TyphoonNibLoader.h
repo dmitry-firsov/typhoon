@@ -13,8 +13,8 @@
 
 
 
-#import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
+#import "TyphoonPlatform.h"
 #import "TyphoonComponentFactory.h"
 
 
@@ -40,7 +40,7 @@
  @param nibName The view controlelr nib name.
  @return The view controller created by initWithNibName:bundle:.
  */
-- (__kindof UIViewController *)instantiateViewControllerWithIdentifier:(NSString *)nibName;
+- (__kindof TyphoonViewControllerClass *)instantiateViewControllerWithIdentifier:(NSString *)nibName;
 
 @end
 

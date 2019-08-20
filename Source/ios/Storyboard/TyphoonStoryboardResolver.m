@@ -16,6 +16,7 @@
 #import "TyphoonComponentFactory+Storyboard.h"
 #import "TyphoonComponentsPool.h"
 
+#import "TyphoonPlatform.h"
 #import <objc/runtime.h>
 
 @implementation TyphoonStoryboardResolver
@@ -34,19 +35,20 @@
 + (void)swizzleUIStoryboardWithNames:(NSArray *)storyboardNames
 {
     SEL sel = @selector(storyboardWithName:bundle:);
-    Method method = class_getClassMethod([UIStoryboard class], sel);
+    Method method = class_getClassMethod([TyphoonStoryboardClass class], sel);
     
     id(*originalImp)(id, SEL, id, id) = (id (*)(id, SEL, id, id)) method_getImplementation(method);
     
     IMP adjustedImp = imp_implementationWithBlock(^id(id instance, NSString *name, NSBundle *bundle) {
-        id componentFactory = [TyphoonComponentFactory factoryForResolvingUI];
-
-        if ([instance class] == [UIStoryboard class] && componentFactory && [storyboardNames containsObject:name]) {
-            TyphoonStoryboard *storyboard = [TyphoonStoryboard storyboardWithName:name factory:componentFactory bundle:bundle];
-            @synchronized(self) {
-                id<TyphoonComponentsPool> storyboardPool = [componentFactory storyboardPool];
-                [storyboardPool setObject:storyboardPool forKey:name];
-            }
+        if ([instance class] == [TyphoonStoryboardClass class] && [storyboardNames containsObject:name]) {
+            TyphoonStoryboard *storyboard = [TyphoonStoryboard storyboardWithName:name factory:nil bundle:bundle];
+            [TyphoonComponentFactory factoryForUiPromiseWithBlock:^(TyphoonComponentFactory *factory) {
+                storyboard.factory = factory;
+                @synchronized(self) {
+                    id<TyphoonComponentsPool> storyboardPool = [factory storyboardPool];
+                    [storyboardPool setObject:storyboardPool forKey:name];
+                }
+            }];
             return storyboard;
         } else {
             return originalImp(instance, sel, name, bundle);

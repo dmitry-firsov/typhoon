@@ -10,12 +10,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #import <Foundation/Foundation.h>
+#import "TyphoonPlatform.h"
 
 /**
 * Just drop this view into your Xib and specify definition key as restorationIdentifier
 * This view will be dynamically replaced with view from definition at runtime.
 * TyphoonLoadedView's frame, autoresizing mask and constraints would be transferred into view from definition
 * */
-@interface TyphoonLoadedView : UIView
+@interface TyphoonLoadedView : TyphoonViewClass
 
 @end

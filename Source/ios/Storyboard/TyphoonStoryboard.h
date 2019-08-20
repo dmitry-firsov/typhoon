@@ -9,11 +9,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifdef __IPHONE_5_0
 
 
-
-#import <UIKit/UIKit.h>
+#import "TyphoonPlatform.h"
 #import "TyphoonComponentFactory.h"
 
 
@@ -31,7 +29,8 @@
  * Value    : #set your definition selector string here#
  * @endcode
  */
-@interface TyphoonStoryboard : UIStoryboard
+NS_CLASS_AVAILABLE(10_10, 5_0)
+@interface TyphoonStoryboard : TyphoonStoryboardClass
 
 @property(nonatomic, strong) id<TyphoonComponentFactory> factory;
 @property(nonatomic, strong) NSString *storyboardName;
@@ -40,8 +39,15 @@
 
 + (TyphoonStoryboard *)storyboardWithName:(NSString *)name factory:(id<TyphoonComponentFactory>)factory bundle:(NSBundle *)bundleOrNil;
 
-- (UIViewController *)instantiatePrototypeViewControllerWithIdentifier:(NSString *)identifier;
+- (TyphoonViewControllerClass *)instantiatePrototypeViewControllerWithIdentifier:(NSString *)identifier;
 
+@end
+
+
+#if (!TARGET_OS_IPHONE || TARGET_OS_TV)
+
+@interface NSStoryboard (TyphoonStoryboard)
+- (id)instantiateViewControllerWithIdentifier:(NSString *)identifier;
 @end
 
 #endif

@@ -35,9 +35,11 @@
 
 @implementation TyphoonComponentFactory
 
-static TyphoonComponentFactory *defaultFactory;
+static TyphoonComponentFactory *defaultFactory = nil;
 
 static TyphoonComponentFactory *uiResolvingFactory = nil;
+
+static NSMutableArray<TyphoonComponentFactoryPromiseBlock> *uiFactoryPromiseBlocks = nil;
 
 //-------------------------------------------------------------------------------------------
 #pragma mark - Class Methods
@@ -56,6 +58,12 @@ static TyphoonComponentFactory *uiResolvingFactory = nil;
 + (void)setFactoryForResolvingUI:(TyphoonComponentFactory *)factory
 {
     uiResolvingFactory = factory;
+    @synchronized(self) {
+        [uiFactoryPromiseBlocks enumerateObjectsUsingBlock:^(TyphoonComponentFactoryPromiseBlock  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            obj(factory);
+        }];
+        uiFactoryPromiseBlocks = nil;
+    }
 }
 
 + (TyphoonComponentFactory *)factoryForResolvingUI
@@ -68,14 +76,29 @@ static TyphoonComponentFactory *uiResolvingFactory = nil;
     return uiResolvingFactory;
 }
 
++ (void)factoryForUiPromiseWithBlock:(void (^)(TyphoonComponentFactory *factory)) promiseBlock {
+    NSParameterAssert(promiseBlock);
+    if (uiResolvingFactory) {
+        promiseBlock(uiResolvingFactory);
+    } else {
+        @synchronized(self) {
+            if (uiFactoryPromiseBlocks == nil) {
+                uiFactoryPromiseBlocks = [NSMutableArray array];
+            }
+            [uiFactoryPromiseBlocks addObject:promiseBlock];
+        }
+    }
+}
+
 //-------------------------------------------------------------------------------------------
 #pragma mark - Initialization & Destruction
 //-------------------------------------------------------------------------------------------
 
 - (id)initFactoryForResolvingUI
 {
-    uiResolvingFactory = self;
-    return [self init];
+    self = [self init];
+    [[self class] setFactoryForResolvingUI:self];
+    return self;
 }
 
 - (id)init

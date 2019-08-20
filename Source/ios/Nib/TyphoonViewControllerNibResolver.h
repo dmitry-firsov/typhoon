@@ -9,10 +9,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifdef TARGET_OS_IPHONE
-#import <UIKit/UIKit.h>
-#endif
-
+#import "TyphoonPlatform.h"
 #import "TyphoonDefinitionPostProcessor.h"
 
 /**

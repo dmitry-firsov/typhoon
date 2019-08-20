@@ -38,15 +38,19 @@
     return nibLoader;
 }
 
+- (id)instantiateControllerWithIdentifier:(NSString *)nibName {
+    return [self instantiateViewControllerWithIdentifier:nibName];
+}
+
 - (id)instantiateViewControllerWithIdentifier:(NSString *)nibName
 {
     NSAssert(self.factory, @"TyphoonNibLoader's factory property can't be nil!");
     
     Class viewControllerClass = NSClassFromString(nibName);
     if (!viewControllerClass) {
-        viewControllerClass = [UIViewController class];
-        LogInfo(@"*** Warning *** NSClassFromString(%@) is nil. UIViewController class will be used instead. "
-                "This can lead to 'this class is not key value coding-compliant for the key' exception.", nibName);
+        viewControllerClass = [TyphoonViewControllerClass class];
+        LogInfo(@"*** Warning *** NSClassFromString(%@) is nil. %@ class will be used instead. "
+                "This can lead to 'this class is not key value coding-compliant for the key' exception.", nibName, NSStringFromClass([TyphoonViewControllerClass class]));
     }
     
     id viewController = [[viewControllerClass alloc] initWithNibName:nibName bundle:self.bundle];

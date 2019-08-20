@@ -67,9 +67,9 @@ static NSDictionary *viewControllerTyphoonKeyMap;
     return nil;
 }
 
-+ (UIViewController *)viewControllerWithStoryboardContext:(TyphoonStoryboardDefinitionContext *)context
-                                         injectionContext:(TyphoonInjectionContext *)injectionContext
-                                                  factory:(id<TyphoonComponentFactory>)factoryCompatible
++ (TyphoonViewControllerClass *)viewControllerWithStoryboardContext:(TyphoonStoryboardDefinitionContext *)context
+                                                   injectionContext:(TyphoonInjectionContext *)injectionContext
+                                                            factory:(id<TyphoonComponentFactory>)factoryCompatible
 {
     TyphoonComponentFactory *factory = [self factoryFromFactoryCompatable:factoryCompatible];
     
@@ -79,7 +79,7 @@ static NSDictionary *viewControllerTyphoonKeyMap;
         storyboardName = value;
     }];
 
-    UIStoryboard *storyboard = [storyboardPool objectForKey:storyboardName];
+    TyphoonStoryboardClass *storyboard = [storyboardPool objectForKey:storyboardName];
     if (!storyboard) {
         storyboard = [TyphoonStoryboard storyboardWithName:storyboardName
                                                    factory:factory
@@ -93,7 +93,8 @@ static NSDictionary *viewControllerTyphoonKeyMap;
     [context.viewControllerId valueToInjectWithContext:injectionContext completion:^(id value) {
         viewControllerId = value;
     }];
-    UIViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:viewControllerId];
+    
+    TyphoonViewControllerClass *viewController = [storyboard instantiateViewControllerWithIdentifier:viewControllerId];
     
     NSString *key = [self viewControllerMapKeyWithIdentifier:viewControllerId storyboardName:storyboardName];
     [self cacheControllerClass:[viewController class] forKey:key];
@@ -104,14 +105,14 @@ static NSDictionary *viewControllerTyphoonKeyMap;
     return viewController;
 }
 
-+ (UIViewController *)viewControllerWithIdentifier:(NSString *)identifier
-                                        storyboard:(TyphoonStoryboard *)storyboard
++ (TyphoonViewControllerClass *)viewControllerWithIdentifier:(NSString *)identifier
+                                                  storyboard:(TyphoonStoryboard *)storyboard
 {
-    UIViewController *prototype = [storyboard instantiatePrototypeViewControllerWithIdentifier:identifier];
-    UIViewController *result = [self configureOrObtainFromPoolViewControllerForInstance:prototype
-                                                                            withFactory:storyboard.factory
-                                                                             storyboard:storyboard];
-     NSString *key = [self viewControllerMapKeyWithIdentifier:identifier storyboardName:storyboard.storyboardName];
+    TyphoonViewControllerClass *prototype = [storyboard instantiatePrototypeViewControllerWithIdentifier:identifier];
+    TyphoonViewControllerClass *result = [self configureOrObtainFromPoolViewControllerForInstance:prototype
+                                                                                      withFactory:storyboard.factory
+                                                                                       storyboard:storyboard];
+    NSString *key = [self viewControllerMapKeyWithIdentifier:identifier storyboardName:storyboard.storyboardName];
     [self cacheControllerClass:[result class] forKey:key];
     if (result.typhoonKey) {
         [self cacheTyphoonKey:result.typhoonKey forKey:key];
@@ -120,9 +121,9 @@ static NSDictionary *viewControllerTyphoonKeyMap;
     return result;
 }
 
-+ (UIViewController *)cachedViewControllerWithIdentifier:(NSString *)identifier
-                                          storyboardName:(NSString *)storyboardName
-                                                 factory:(id<TyphoonComponentFactory>)factoryCompatible
++ (TyphoonViewControllerClass *)cachedViewControllerWithIdentifier:(NSString *)identifier
+                                                    storyboardName:(NSString *)storyboardName
+                                                           factory:(id<TyphoonComponentFactory>)factoryCompatible
 {
     TyphoonComponentFactory *factory = [self factoryFromFactoryCompatable:factoryCompatible];
     
@@ -134,13 +135,13 @@ static NSDictionary *viewControllerTyphoonKeyMap;
     return [factory scopeCachedViewControllerForClass:viewControllerClass typhoonKey:typhoonKey];
 }
 
-+ (id)configureOrObtainFromPoolViewControllerForInstance:(UIViewController *)instance
++ (id)configureOrObtainFromPoolViewControllerForInstance:(TyphoonViewControllerClass *)instance
                                              withFactory:(id<TyphoonComponentFactory>)factoryCompatible
                                               storyboard:(TyphoonStoryboard *)storyboard
 {
     TyphoonComponentFactory *factory = [self factoryFromFactoryCompatable:factoryCompatible];
 
-    UIViewController *cachedInstance = [factory scopeCachedViewControllerForInstance:instance typhoonKey:instance.typhoonKey];
+    TyphoonViewControllerClass *cachedInstance = [factory scopeCachedViewControllerForInstance:instance typhoonKey:instance.typhoonKey];
     
     if (cachedInstance) {
         return cachedInstance;

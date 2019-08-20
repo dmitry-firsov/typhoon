@@ -11,6 +11,7 @@
 
 #import <Foundation/Foundation.h>
 #import "TyphoonComponentFactory.h"
+#import "TyphoonPlatform.h"
 
 @interface TyphoonViewControllerInjector : NSObject
 
@@ -20,7 +21,7 @@
  @param viewController View controller.
  @param factory Typhoon factory.
  */
-- (void)injectPropertiesForViewController:(UIViewController *)viewController withFactory:(id<TyphoonComponentFactory>)factory;
+- (void)injectPropertiesForViewController:(TyphoonViewControllerClass *)viewController withFactory:(id<TyphoonComponentFactory>)factory;
 
 /**
  *  * Inject properties and check view controller's storyboard is equal to param storyboard.
@@ -29,6 +30,6 @@
  @param factory Typhoon factory.
  @param storyboard Storyboard to compare with.
  */
-- (void)injectPropertiesForViewController:(UIViewController *)viewController withFactory:(id<TyphoonComponentFactory>)factory storyboard:(UIStoryboard *)storyboard;
+- (void)injectPropertiesForViewController:(TyphoonViewControllerClass *)viewController withFactory:(id<TyphoonComponentFactory>)factory storyboard:(TyphoonStoryboardClass *)storyboard NS_AVAILABLE(10_10, 5_0);
 
 @end

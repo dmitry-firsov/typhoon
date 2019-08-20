@@ -13,7 +13,7 @@
 #import "UIResponder+TyphoonOutletTransfer.h"
 #import <objc/runtime.h>
 
-@implementation UIView (TyphoonOutletTransfer)
+@implementation TyphoonViewClass (TyphoonOutletTransfer)
 
 - (void)setTyphoonNeedTransferOutlets:(BOOL)typhoonNeedTransferOutlets
 {
@@ -35,46 +35,40 @@
         Class class = [self class];
         
         SEL originalSelector = @selector(awakeFromNib);
-        SEL swizzledSelector = @selector(typhoon_awakeFromNib);
         
-        Method originalMethod = class_getInstanceMethod(class, originalSelector);
-        Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);
+        Method method = class_getInstanceMethod(class, originalSelector);
         
-        BOOL didAddMethod = class_addMethod(class, originalSelector, method_getImplementation(swizzledMethod), method_getTypeEncoding(swizzledMethod));
+        void(*originalImp)(id, SEL) = (void (*)(id, SEL)) method_getImplementation(method);
         
-        if (didAddMethod) {
-            class_replaceMethod(class, swizzledSelector, method_getImplementation(originalMethod), method_getTypeEncoding(originalMethod));
-        } else {
-            method_exchangeImplementations(originalMethod, swizzledMethod);
+        IMP swizzledImp = imp_implementationWithBlock(^void(TyphoonViewClass *view) {
+            originalImp(view, originalSelector);
+            // When view have superview transfer outlets if needed
+            if (view.typhoonNeedTransferOutlets) {
+                // recursive search for root view (superview without superview)
+                TyphoonViewClass *rootView = [view findRootView:view];
+                
+                // Change UIViewController outlets properties
+                TyphoonResponderClass *nextRexponder = [rootView nextResponder];
+                if ([nextRexponder isKindOfClass:[TyphoonViewControllerClass class]]) {
+                    [nextRexponder transferConstraintsFromView:view];
+                }
+                
+                // recursive check and change super outlets properties
+                [view transferOutlets:rootView
+                         transferView:view];
+                // Mark that the transportation of finished
+                view.typhoonNeedTransferOutlets = NO;
+            }
+        });
+        
+        if(!class_addMethod(self, originalSelector, swizzledImp, method_getTypeEncoding(method))) {
+            method_setImplementation(method, swizzledImp);
         }
-        
     });
 }
 
-- (void)typhoon_awakeFromNib
-{
-    [self typhoon_awakeFromNib];
-    // When view have superview transfer outlets if needed
-    if (self.typhoonNeedTransferOutlets) {
-        // recursive search for root view (superview without superview)
-        UIView *rootView = [self findRootView:self];
-        
-        // Change UIViewController outlets properties
-        UIResponder *nextRexponder = [rootView nextResponder];
-        if ([nextRexponder isKindOfClass:[UIViewController class]]) {
-            [nextRexponder transferConstraintsFromView:self];
-        }
-        
-        // recursive check and change super outlets properties
-        [self transferOutlets:rootView
-                 transferView:self];
-        // Mark that the transportation of finished
-        self.typhoonNeedTransferOutlets = NO;
-    }    
-}
-
-- (void)transferOutlets:(UIView *)view
-           transferView:(UIView *)transferView
+- (void)transferOutlets:(TyphoonViewClass *)view
+           transferView:(TyphoonViewClass *)transferView
 {
     [view transferConstraintsFromView:transferView];
     
@@ -83,13 +77,13 @@
         return;
     }
     
-    for (UIView *subview in view.subviews) {
+    for (TyphoonViewClass *subview in view.subviews) {
         [subview transferOutlets:subview
                     transferView:transferView];
     }
 }
 
-- (UIView *)findRootView:(UIView *)view
+- (TyphoonViewClass *)findRootView:(TyphoonViewClass *)view
 {
     NSArray *expulsionViewClasses = [self expulsionViewClasses];
     // Optimization. The outlet from view to the UICollectionViewCell is invalid.
@@ -100,8 +94,8 @@
         }
     }
     
-    UIResponder *nextRexponder = [view nextResponder];
-    if ([nextRexponder isKindOfClass:[UIViewController class]]) {
+    TyphoonResponderClass *nextRexponder = [view nextResponder];
+    if ([nextRexponder isKindOfClass:[TyphoonViewControllerClass class]]) {
         return view;
     }
 
@@ -113,8 +107,13 @@
 
 - (NSArray *)expulsionViewClasses
 {
+#if TARGET_OS_IPHONE || TARGET_OS_TV
     return @[[UITableViewCell class],
              [UICollectionViewCell class]];
+#elif TARGET_OS_MAC
+    return @[[NSCell class],
+             [NSCollectionViewItem class]];
+#endif
 }
 
 @end
