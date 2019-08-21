@@ -27,7 +27,7 @@
 
 + (void)load
 {
-    [TyphoonViewControllerClass swizzleViewDidLoadMethod];
+    [TyphoonViewControllerBaseClass swizzleViewDidLoadMethod];
 }
 
 - (void)injectPropertiesForViewController:(TyphoonViewControllerClass *)viewController withFactory:(id)factory

@@ -12,6 +12,7 @@
 #if TARGET_OS_IPHONE || TARGET_OS_TV
 
 #import <UIKit/UIKit.h>
+#define TyphoonViewControllerBaseClass UIViewController
 #define TyphoonViewControllerClass UIViewController
 #define TyphoonViewClass UIView
 #define TyphoonStoryboardClass UIStoryboard
@@ -20,6 +21,7 @@
 #elif TARGET_OS_MAC
 
 #import <AppKit/AppKit.h>
+#define TyphoonViewControllerBaseClass NSResponder
 #define TyphoonViewControllerClass NSViewController
 #define TyphoonViewClass NSView
 #define TyphoonStoryboardClass NSStoryboard

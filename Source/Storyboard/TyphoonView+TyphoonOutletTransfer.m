@@ -49,7 +49,7 @@
                 
                 // Change UIViewController outlets properties
                 TyphoonResponderClass *nextRexponder = [rootView nextResponder];
-                if ([nextRexponder isKindOfClass:[TyphoonViewControllerClass class]]) {
+                if ([nextRexponder isKindOfClass:[TyphoonViewControllerBaseClass class]]) {
                     [nextRexponder transferConstraintsFromView:view];
                 }
                 
@@ -95,7 +95,7 @@
     }
     
     TyphoonResponderClass *nextRexponder = [view nextResponder];
-    if ([nextRexponder isKindOfClass:[TyphoonViewControllerClass class]]) {
+    if ([nextRexponder isKindOfClass:[TyphoonViewControllerBaseClass class]]) {
         return view;
     }
 

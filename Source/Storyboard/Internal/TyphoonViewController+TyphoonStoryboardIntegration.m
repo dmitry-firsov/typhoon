@@ -13,7 +13,7 @@
 
 #import <objc/runtime.h>
 
-@implementation TyphoonViewControllerClass (TyphoonStoryboardIntegration)
+@implementation TyphoonViewControllerBaseClass (TyphoonStoryboardIntegration)
 
 static const char *kTyphoonKey;
 static const char *kTyphoonViewDidLoadBlock;

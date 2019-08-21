@@ -46,7 +46,7 @@
 
 - (BOOL)shouldProcessDefinition:(TyphoonDefinition *)definition
 {
-    return [definition.type isSubclassOfClass:[TyphoonViewControllerClass class]] && definition.initializerGenerated;
+    return [definition.type isSubclassOfClass:[TyphoonViewControllerBaseClass class]] && definition.initializerGenerated;
 }
 
 @end

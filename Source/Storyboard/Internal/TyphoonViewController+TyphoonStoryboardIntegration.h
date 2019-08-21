@@ -11,7 +11,7 @@
 
 #import "TyphoonPlatform.h"
 
-@interface TyphoonViewControllerClass (TyphoonStoryboardIntegration)
+@interface TyphoonViewControllerBaseClass (TyphoonStoryboardIntegration)
 
 @property(nonatomic, strong) NSString *typhoonKey;
 

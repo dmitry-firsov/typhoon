@@ -38,7 +38,8 @@
     return nibLoader;
 }
 
-- (id)instantiateControllerWithIdentifier:(NSString *)nibName {
+- (id)instantiateControllerWithIdentifier:(NSString *)nibName
+{
     return [self instantiateViewControllerWithIdentifier:nibName];
 }
 
