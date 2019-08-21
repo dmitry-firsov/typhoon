@@ -42,7 +42,7 @@
     IMP adjustedImp = imp_implementationWithBlock(^id(id instance, NSString *name, NSBundle *bundle) {
         if ([instance class] == [TyphoonStoryboardClass class] && [storyboardNames containsObject:name]) {
             TyphoonStoryboard *storyboard = [TyphoonStoryboard storyboardWithName:name factory:nil bundle:bundle];
-            [TyphoonComponentFactory factoryForUiPromiseWithBlock:^(TyphoonComponentFactory *factory) {
+            [TyphoonComponentFactory setUIFactoryPromiseBlock:^(TyphoonComponentFactory *factory) {
                 storyboard.factory = factory;
                 @synchronized(self) {
                     id<TyphoonComponentsPool> storyboardPool = [factory storyboardPool];

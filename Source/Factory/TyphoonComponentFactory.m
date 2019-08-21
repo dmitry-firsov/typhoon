@@ -66,17 +66,8 @@ static NSMutableArray<TyphoonComponentFactoryPromiseBlock> *uiFactoryPromiseBloc
     }
 }
 
-+ (TyphoonComponentFactory *)factoryForResolvingUI
++ (void)setUIFactoryPromiseBlock:(void (^)(TyphoonComponentFactory *factory))promiseBlock
 {
-    return uiResolvingFactory;
-}
-
-+ (TyphoonComponentFactory *)factoryForResolvingFromXibs
-{
-    return uiResolvingFactory;
-}
-
-+ (void)factoryForUiPromiseWithBlock:(void (^)(TyphoonComponentFactory *factory)) promiseBlock {
     NSParameterAssert(promiseBlock);
     if (uiResolvingFactory) {
         promiseBlock(uiResolvingFactory);
@@ -88,6 +79,16 @@ static NSMutableArray<TyphoonComponentFactoryPromiseBlock> *uiFactoryPromiseBloc
             [uiFactoryPromiseBlocks addObject:promiseBlock];
         }
     }
+}
+
++ (TyphoonComponentFactory *)factoryForResolvingUI
+{
+    return uiResolvingFactory;
+}
+
++ (TyphoonComponentFactory *)factoryForResolvingFromXibs
+{
+    return uiResolvingFactory;
 }
 
 //-------------------------------------------------------------------------------------------

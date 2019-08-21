@@ -164,7 +164,7 @@ typedef void (^TyphoonComponentFactoryPromiseBlock)(TyphoonComponentFactory *);
 
 + (instancetype)newFactoryForResolvingUI;
 
-+ (void)factoryForUiPromiseWithBlock:(TyphoonComponentFactoryPromiseBlock)promiseBlock;
++ (void)setUIFactoryPromiseBlock:(TyphoonComponentFactoryPromiseBlock)promiseBlock;
 
 + (void)setFactoryForResolvingUI:(TyphoonComponentFactory *)factory;
 
