@@ -112,6 +112,11 @@ static NSDictionary *viewControllerTyphoonKeyMap;
     TyphoonViewControllerClass *result = [self configureOrObtainFromPoolViewControllerForInstance:prototype
                                                                                       withFactory:storyboard.factory
                                                                                        storyboard:storyboard];
+	
+	if (!identifier.length) {
+		identifier = storyboard.storyboardName;
+	}
+	
     NSString *key = [self viewControllerMapKeyWithIdentifier:identifier storyboardName:storyboard.storyboardName];
     [self cacheControllerClass:[result class] forKey:key];
     if (result.typhoonKey) {

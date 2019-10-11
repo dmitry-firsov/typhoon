@@ -52,7 +52,7 @@
 
 - (NSUInteger)hash
 {
-    NSUInteger hash = self.type;
+    NSUInteger hash = (NSUInteger)self.type;
 
     if (self.type == TyphoonInjectionTypeProperty) {
         hash = TyphoonHashByAppendingInteger(hash, [self.propertyName hash]);
