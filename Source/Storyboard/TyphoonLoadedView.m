@@ -84,7 +84,9 @@
     NSTextField *label = [[NSTextField alloc] initWithFrame:self.bounds];
     label.lineBreakMode = NSLineBreakByWordWrapping;
     label.editable = NO;
-    label.maximumNumberOfLines = 0;
+	if (@available(macOS 10.11, *)) {
+		  label.maximumNumberOfLines = 0;
+	}
     label.alignment = NSTextAlignmentCenter;
     label.textColor = [NSColor colorWithWhite:0.78f alpha:1];
     
