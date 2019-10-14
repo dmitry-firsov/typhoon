@@ -40,7 +40,7 @@
 {
 #if TARGET_OS_IPHONE || TARGET_OS_TV
     return [super instantiateViewControllerWithIdentifier:identifier];
-#elif TARGET_OS_MAC
+#elif TARGET_OS_OSX
 	if (!identifier.length) {
 		return [super instantiateInitialController];
 	} else {
@@ -49,7 +49,11 @@
 #endif
 }
 
-#if TARGET_OS_MAC
+#if TARGET_OS_OSX
+- (id)instantiateInitialController {
+	return [self instantiateViewControllerWithIdentifier:nil];
+}
+
 - (id)instantiateControllerWithIdentifier:(NSString *)identifier {
     return [self instantiateViewControllerWithIdentifier:identifier];
 }

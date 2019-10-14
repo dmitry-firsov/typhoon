@@ -18,7 +18,7 @@
 #define TyphoonStoryboardClass UIStoryboard
 #define TyphoonResponderClass UIResponder
 
-#elif TARGET_OS_MAC
+#elif TARGET_OS_OSX
 
 #import <AppKit/AppKit.h>
 #define TyphoonViewControllerBaseClass NSResponder
