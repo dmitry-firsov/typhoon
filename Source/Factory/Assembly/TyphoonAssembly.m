@@ -268,7 +268,10 @@ static NSMutableSet *reservedSelectorsAsStrings;
 {
     [self attachProcessors:postProcessors];
 
-    NSMutableSet *reconciledAssemblies = [NSMutableSet setWithArray:[@[self] arrayByAddingObjectsFromArray:assemblies]];
+    NSMutableSet *reconciledAssemblies = [NSMutableSet setWithObject:self];
+	if (assemblies) {
+		[reconciledAssemblies addObjectsFromArray:assemblies];
+	}
     NSMutableSet *assembliesToRemove = [[NSMutableSet alloc] init];
 
     NSSet *collaboratingAssemblies = [self.collector collectCollaboratingAssemblies];
@@ -305,8 +308,10 @@ static NSMutableSet *reservedSelectorsAsStrings;
 
 - (void)attachProcessors:(NSArray *)postProcessors
 {
-    _preattachedInfrastructureComponents =
-            [_preattachedInfrastructureComponents arrayByAddingObjectsFromArray:postProcessors];
+	if (postProcessors) {
+		_preattachedInfrastructureComponents =
+		[_preattachedInfrastructureComponents arrayByAddingObjectsFromArray:postProcessors];
+	}
 }
 
 - (void)proxyCollaboratingAssembliesPriorToActivation

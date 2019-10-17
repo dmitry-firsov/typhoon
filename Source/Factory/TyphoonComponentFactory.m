@@ -126,9 +126,10 @@ static NSMutableArray<TyphoonComponentFactoryPromiseBlock> *uiFactoryPromiseBloc
     NSDictionary *bundleInfoDictionary = [[NSBundle mainBundle] infoDictionary];
 
     NSNumber *value = bundleInfoDictionary[@"TyphoonAutoInjectionEnabled"];
-    if (!value || [value boolValue]) {
-        [self attachDefinitionPostProcessor:[TyphoonFactoryAutoInjectionPostProcessor new]];
+    if (value && !value.boolValue) {
+		return;
     }
+	[self attachDefinitionPostProcessor:[TyphoonFactoryAutoInjectionPostProcessor new]];
 }
 
 //-------------------------------------------------------------------------------------------
